@@ -25,16 +25,15 @@ const alumniSchema = mongoose.Schema({
       },
     },
   },
-  mobile: [
-    {
-      type: String,
-    },
-  ],
+  mobile: {
+    type: Number,
+  },
+
   institution: {
     type: String,
     required: true,
   },
-  batch: {
+  pbatch: {
     type: Number,
     required: true,
   },
@@ -47,6 +46,10 @@ const alumniSchema = mongoose.Schema({
     required: true,
   },
   location: {
+    type: String,
+    required: true,
+  },
+  theme: {
     type: String,
     required: true,
   },

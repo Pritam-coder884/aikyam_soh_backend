@@ -22,11 +22,10 @@ const studentSchema = mongoose.Schema({
       },
     },
   },
-  mobile: [
-    {
-      type:Number,
-    },
-  ],
+  mobile: {
+    type: Number,
+  },
+
   institution: {
     type: String,
     required: true,
@@ -35,7 +34,7 @@ const studentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  batch: {
+  pyear: {
     type: Number,
     required: true,
   },
@@ -43,8 +42,8 @@ const studentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  regno: {
-    type:Number,
+  regdno: {
+    type: Number,
     required: true,
     unique: true,
   },

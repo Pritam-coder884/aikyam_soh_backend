@@ -4,14 +4,15 @@ const addAlumni = async (req, res) => {
   const {
     name,
     pic,
-    gender,
     email,
+    gender,
     mobile,
     institution,
-    batch,
+    pbatch,
     branch,
     currentPosition,
     location,
+    theme,
   } = req.body;
   if (
     !name ||
@@ -19,25 +20,40 @@ const addAlumni = async (req, res) => {
     !email ||
     !mobile ||
     !institution ||
-    !batch ||
+    !pbatch ||
     !branch ||
     !currentPosition ||
-    !location
+    !location ||
+    !theme
   ) {
-    res.status(400).json("Please enter all details");
+    console.log({
+      name,
+      pic,
+      email,
+      gender,
+      mobile,
+      institution,
+      pbatch,
+      branch,
+      currentPosition,
+      location,
+      theme,
+    });
+    // throw new Error("Please enter all details ");
   }
   try {
     const newAlumni = await Alumni.create({
       name,
       pic,
-      gender,
       email,
+      gender,
       mobile,
       institution,
-      batch,
+      pbatch,
       branch,
       currentPosition,
       location,
+      theme,
     });
     res.status(200).json(newAlumni);
   } catch (err) {
@@ -54,7 +70,7 @@ const deleteAlumni = async (req, res) => {
       res.status(400).json("Error in deleting alumni\n" + err.message);
     }
   } else {
-    res.status(400).json("Please enter id");
+    throw new Error("Please enter id");
   }
 };
 const editAlumni = async (req, res) => {
@@ -62,14 +78,15 @@ const editAlumni = async (req, res) => {
   const {
     name,
     pic,
-    gender,
     email,
+    gender,
     mobile,
     institution,
-    batch,
+    pbatch,
     branch,
     currentPosition,
     location,
+    theme,
   } = req.body;
   if (id) {
     try {
@@ -78,14 +95,15 @@ const editAlumni = async (req, res) => {
         {
           name,
           pic,
-          gender,
           email,
+          gender,
           mobile,
           institution,
-          batch,
+          pbatch,
           branch,
           currentPosition,
           location,
+          theme,
         },
         { new: true }
       );
@@ -94,7 +112,7 @@ const editAlumni = async (req, res) => {
       res.status(400).json("Error in updating alumni\n" + err.message);
     }
   } else {
-    res.status(400).json("Please enter email");
+    throw new Error("Please enter id");
   }
 };
 const readAlumni = async (req, res) => {
@@ -105,7 +123,7 @@ const readAlumni = async (req, res) => {
     res.status(400).json("Error in fetching student\n" + err.message);
   }
 };
-const searchAlumni = async (req, res) => {
+const searchAlumniWithNameEmail = async (req, res) => {
   const keyword = req.query.search
     ? {
         $or: [
@@ -121,11 +139,25 @@ const searchAlumni = async (req, res) => {
     res.status(400).json("Error in searching alumni\n" + err.message);
   }
 };
+const searchAlumniWithTheme = async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        theme: { $regex: req.query.search, $options: "i" },
+      }
+    : {};
+  try {
+    const alumni = await Alumni.find(keyword);
+    res.status(200).json(alumni);
+  } catch (err) {
+    res.status(400).json("Error in searching alumni\n" + err.message);
+  }
+};
 
 module.exports = {
   addAlumni,
   deleteAlumni,
   editAlumni,
   readAlumni,
-  searchAlumni,
+  searchAlumniWithNameEmail,
+  searchAlumniWithTheme,
 };

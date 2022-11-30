@@ -12,6 +12,6 @@ studentRouter.post("/add", addStudent);
 studentRouter.put("/edit/:id", editStudent);
 studentRouter.delete("/delete/:id", deleteStudent);
 studentRouter.get("/read", readStudent);
-studentRouter.get("/", searchStudent);
+studentRouter.get("/nameemail", searchStudent);
 
 module.exports = studentRouter;

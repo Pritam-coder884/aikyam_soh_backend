@@ -8,9 +8,9 @@ const addStudent = async (req, res) => {
     mobile,
     institution,
     qualification,
-    batch,
+    pyear,
     branch,
-    regno,
+    regdno,
   } = req.body;
   if (
     !name ||
@@ -19,11 +19,11 @@ const addStudent = async (req, res) => {
     !mobile ||
     !institution ||
     !qualification ||
-    !batch ||
+    !pyear ||
     !branch ||
-    !regno
+    !regdno
   ) {
-    res.status(400).json("Please enter all details");
+    throw new Error("Please enter all details");
   }
   try {
     const newStudent = await Student.create({
@@ -33,9 +33,9 @@ const addStudent = async (req, res) => {
       mobile,
       institution,
       qualification,
-      batch,
+      pyear,
       branch,
-      regno,
+      regdno,
     });
     res.status(200).json(newStudent);
   } catch (err) {
@@ -52,7 +52,7 @@ const deleteStudent = async (req, res) => {
       res.status(400).json("Error in deleting student\n" + err.message);
     }
   } else {
-    res.status(400).json("Please enter id");
+    throw new Error("Please enter id");
   }
 };
 const editStudent = async (req, res) => {
@@ -64,9 +64,9 @@ const editStudent = async (req, res) => {
     mobile,
     institution,
     qualification,
-    batch,
+    pyear,
     branch,
-    regno,
+    regdno,
   } = req.body;
   if (id) {
     try {
@@ -79,9 +79,9 @@ const editStudent = async (req, res) => {
           mobile,
           institution,
           qualification,
-          batch,
+          pyear,
           branch,
-          regno,
+          regdno,
         },
         { new: true }
       );
@@ -90,7 +90,7 @@ const editStudent = async (req, res) => {
       res.status(400).json("Error in updating student\n" + err.message);
     }
   } else {
-    res.status(400).json("Please enter id");
+    throw new Error("Please enter id");
   }
 };
 const readStudent = async (req, res) => {
